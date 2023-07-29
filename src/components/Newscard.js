@@ -73,15 +73,6 @@ const Newscard = (props) => {
             }}
 
         >
-            {/* <FlingGestureHandler
-                direction={Directions.RIGHT}
-                onHandlerStateChange={(e) => {
-                    if (e.nativeEvent.state === State.END) {
-                        props.setActiveIndex(props.currentItem - 1);
-                    }
-                }
-                }
-            > */}
             <Animated.View style={{
                 backgroundColor: props.color,
                 paddingHorizontal: 25,
