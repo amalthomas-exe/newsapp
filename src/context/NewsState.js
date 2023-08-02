@@ -19,6 +19,7 @@ const NewsState = (props) => {
     const [news,setNews] = useState([]);
     const [dataReady, setDataReady] = useState(false);
     const [dataNeeded, setDataNeeded] = useState(false);
+    const [currentPage,setCurrentPage] = useState("home");
     const [category, setCategory] = useState("trending");
     const url = `${host}/${categories[category]}${category=="trending"?"?country=in":""}&apiKey=${apiKey}`
 
@@ -43,7 +44,9 @@ const NewsState = (props) => {
             colors:colors,
             currentItem:currentItem,
             setCurrentItem:setCurrentItem,
-            url:url
+            url:url,
+            currentPage:currentPage,
+            setCurrentPage,setCurrentPage
         }}>
             {props.children}
         </newsContext.Provider>

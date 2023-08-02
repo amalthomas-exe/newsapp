@@ -6,6 +6,7 @@ import { Alert, Animated, Dimensions, View } from 'react-native'
 
 
 const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 
 const NewscardHolder = (props) => {
   const context = useContext(newsContext)
@@ -40,7 +41,11 @@ const NewscardHolder = (props) => {
     scrollXIndex.setValue(activeIndex);
   })
   return (
-    <View>
+    <View style={
+      {
+        height: height/1.50
+      }
+    }>
       {
         dataReady && news.map((item, index) => {
           const inputRange = [index - 1, index, index + 1];

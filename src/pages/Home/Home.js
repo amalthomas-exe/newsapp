@@ -4,8 +4,9 @@ import { TapGestureHandler, State } from 'react-native-gesture-handler'
 import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import NewscardHolder from '../../components/NewscardHolder'
+import BottomNavBar from '../../components/BottomNavBar'
 
-const Welcome = ({navigation}) => {
+const Home = ({navigation}) => {
     const context = useContext(newsContext)
     const { category, setCategory } = context;
     console.log("Welcome")
@@ -18,7 +19,7 @@ const Welcome = ({navigation}) => {
                     flexDirection: 'row',
                 }}
                 >
-                    <Icon name="newspaper-o" size={30} />
+                    <Icon name="newspaper-o" size={40} />
 
                     <Text style={styles.titleText} >
                         News
@@ -121,6 +122,7 @@ const Welcome = ({navigation}) => {
             }}>
                 <NewscardHolder navigation={navigation} />
             </View>
+            <BottomNavBar />
         </View>
     )
 }
@@ -138,7 +140,8 @@ const styles = StyleSheet.create({
         color: "white",
         marginLeft: 8,
         fontSize: 30,
-        fontFamily: "Manrope-Bold"
+        fontFamily: "Manrope-Bold",
+        marginTop:-11
     },
 
     scrollNavActive: {
@@ -162,4 +165,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Welcome
+export default Home

@@ -1,5 +1,5 @@
 import React from 'react'
-import Welcome from './src/pages/Welcome/Welcome'
+import Home from './src/pages/Home/Home'
 import FullPageNews from './src/pages/FullPageNews/FullPageNews'
 import { SafeAreaView, StatusBar, View } from 'react-native'
 import NewsState from './src/context/NewsState'
@@ -22,7 +22,7 @@ const app = () => {
                 barStyle="light-content"
               />
               <Stack.Navigator>
-                <Stack.Screen name="Welcome" component={Welcome} options={{
+                <Stack.Screen name="Welcome" component={Home} options={{
                   headerShown: false,
                 }}/>
                 <Stack.Screen name="FullPageNews" component={FullPageNews} options={{

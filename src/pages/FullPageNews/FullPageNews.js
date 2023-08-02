@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, Text, StatusBar, Image, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import newsContext from '../../context/newsContext'
@@ -6,11 +6,11 @@ import AuthorInfo from '../../components/AuthorInfo'
 import { State, TapGestureHandler } from 'react-native-gesture-handler'
 
 const FullPageNews = (props) => {
-  const { currentItem, colors, news,url } = useContext(newsContext)
+  const { currentItem, colors, news, url } = useContext(newsContext)
   console.log(news[currentItem].description)
   return (
     <>
-      <StatusBar backgroundColor={colors[currentItem % 8]} barStyle={'dark-content'} animated={true}/>
+      <StatusBar backgroundColor={colors[currentItem % 8]} barStyle={'dark-content'} animated={true} />
       <View style={{
         width: '100%',
         height: '100%',
@@ -18,28 +18,28 @@ const FullPageNews = (props) => {
         flexDirection: 'column',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: 20,
       }
       }>
-        <TapGestureHandler
-          numberOfTaps={1}
-          onHandlerStateChange={(e)=>{
-            if(e.nativeEvent.state = State.END){
-              console.log("going back")
-              props.navigation.goBack()
-            }
-          }}
+        <ScrollView showsVerticalScrollIndicator={false}
         >
-        <View style={{
-          alignSelf: 'flex-start',
-          padding: 10,
-          borderRadius: 50,
-          backgroundColor: "#0000002c"
-        }}>
-          <Icon name="arrow-back" size={35} color="black"/>
-        </View>
-        </TapGestureHandler>
-        <ScrollView showsVerticalScrollIndicator={false}>
+          <TapGestureHandler
+            numberOfTaps={1}
+            onHandlerStateChange={(e) => {
+              if (e.nativeEvent.state = State.END) {
+                console.log("going back")
+                props.navigation.goBack()
+              }
+            }}
+          ><View style={{
+            alignSelf: 'flex-start',
+            marginTop:20,
+            padding: 8,
+            borderRadius: 50,
+            backgroundColor: "#0000002c"
+          }}>
+              <Icon name="arrow-back" size={30} color="black" />
+            </View>
+          </TapGestureHandler>
           <View style={{
             marginTop: 20,
           }}>
