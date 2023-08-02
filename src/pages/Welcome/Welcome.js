@@ -4,7 +4,8 @@ import { TapGestureHandler, State } from 'react-native-gesture-handler'
 import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import NewscardHolder from '../../components/NewscardHolder'
-const Welcome = () => {
+
+const Welcome = ({navigation}) => {
     const context = useContext(newsContext)
     const { category, setCategory } = context;
     console.log("Welcome")
@@ -118,7 +119,7 @@ const Welcome = () => {
                 justifyContent: "center",
                 marginTop: 40,
             }}>
-                <NewscardHolder />
+                <NewscardHolder navigation={navigation} />
             </View>
         </View>
     )

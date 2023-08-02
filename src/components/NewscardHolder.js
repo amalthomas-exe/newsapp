@@ -3,45 +3,13 @@ import newsContext from '../context/newsContext'
 import Newscard from './Newscard'
 import { Alert, Animated, Dimensions, View } from 'react-native'
 
-const colors = ["#FFE8E5", "#FFF2C5", "#E0F1FF"]
-
-// const DATA = [{ title: "Breaking News: New Discovery in Space Exploration", description: "Scientists have made a groundbreaking discovery in space exploration..." },
-// { title: "Economic Growth Forecast for the Upcoming Year", description: "The economy is predicted to experience significant growth..." },
-// { title: "Health Alert: Outbreak of New Virus Strain", description: "Health officials are closely monitoring an outbreak of a new virus strain..." },
-// { title: "Sports Update: Exciting Upset in Major Tournament", description: "In a surprising turn of events, an underdog team secures victory..." },
-// { title: "Technology Advancement: AI Breakthrough", description: "Researchers have achieved a major advancement in artificial intelligence..." },
-// { title: "Environmental Concerns: Record High Temperatures", description: "Record-breaking temperatures raise concerns about the environment..." },
-// { title: "Breaking News: New Discovery in Space Exploration", description: "Scientists have made a groundbreaking discovery in space exploration..." },
-// { title: "Economic Growth Forecast for the Upcoming Year", description: "The economy is predicted to experience significant growth..." },
-// { title: "Health Alert: Outbreak of New Virus Strain", description: "Health officials are closely monitoring an outbreak of a new virus strain..." },
-// { title: "Sports Update: Exciting Upset in Major Tournament", description: "In a surprising turn of events, an underdog team secures victory..." },
-// { title: "Technology Advancement: AI Breakthrough", description: "Researchers have achieved a major advancement in artificial intelligence..." },
-// { title: "Environmental Concerns: Record High Temperatures", description: "Record-breaking temperatures raise concerns about the environment..." },
-// { title: "Breaking News: New Discovery in Space Exploration", description: "Scientists have made a groundbreaking discovery in space exploration..." },
-// { title: "Economic Growth Forecast for the Upcoming Year", description: "The economy is predicted to experience significant growth..." },
-// { title: "Health Alert: Outbreak of New Virus Strain", description: "Health officials are closely monitoring an outbreak of a new virus strain..." },
-// { title: "Sports Update: Exciting Upset in Major Tournament", description: "In a surprising turn of events, an underdog team secures victory..." },
-// { title: "Technology Advancement: AI Breakthrough", description: "Researchers have achieved a major advancement in artificial intelligence..." },
-// { title: "Environmental Concerns: Record High Temperatures", description: "Record-breaking temperatures raise concerns about the environment..." },
-// { title: "Breaking News: New Discovery in Space Exploration", description: "Scientists have made a groundbreaking discovery in space exploration..." },
-// { title: "Economic Growth Forecast for the Upcoming Year", description: "The economy is predicted to experience significant growth..." },
-// { title: "Health Alert: Outbreak of New Virus Strain", description: "Health officials are closely monitoring an outbreak of a new virus strain..." },
-// { title: "Sports Update: Exciting Upset in Major Tournament", description: "In a surprising turn of events, an underdog team secures victory..." },
-// { title: "Technology Advancement: AI Breakthrough", description: "Researchers have achieved a major advancement in artificial intelligence..." },
-// { title: "Environmental Concerns: Record High Temperatures", description: "Record-breaking temperatures raise concerns about the environment..." },
-
-
-// ]
-
-
 
 
 const width = Dimensions.get("window").width
 
-const NewscardHolder = () => {
+const NewscardHolder = (props) => {
   const context = useContext(newsContext)
-  const { fetchData,news,dataReady,category } = context;
-  const [currentItem, setCurrentItem] = useState(0)
+  const { fetchData,news,dataReady,category,colors,currentItem,setCurrentItem } = context;
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
   const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
   // const [activeData, setActiveData] = useState([]);
@@ -108,8 +76,7 @@ const NewscardHolder = () => {
               animationProps={[translateX, rotate, translateY, opacity]}
               zIndex={zIndex}
               setActiveIndex={setActiveIndex}
-              currentItem={currentItem}
-              color={colors[index % 3]}
+              navigation = {props.navigation}
             />
 
           )

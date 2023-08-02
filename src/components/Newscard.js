@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { View, StyleSheet, Text, Dimensions, Animated, Image, Alert } from 'react-native'
 import AuthorInfo from './AuthorInfo'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler'
-
-const width = Dimensions.get("window").width
+import FullPageNews from '../pages/FullPageNews/FullPageNews'
+import {useBetweenPages,BetweenTypes} from 'between-pages'
+import newsContext from '../context/newsContext'
+const ScreenWidth = Dimensions.get("window").width
 
 //edit the function below to include only a certain count of characters to the string
 
@@ -30,11 +32,28 @@ const Newscard = (props) => {
     const [isDragging, setIsDragging] = React.useState(false);
     const [liked, setLiked] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
+    const doubleTapRef = React.useRef(null);
+    const context = useContext(newsContext);
+    const {colors,currentItem} = context
+    const {startTransition} = useBetweenPages(<FullPageNews context={context}/>)
+
+    const handleToNewsPage = () => {
+        startTransition(
+            {
+                type:BetweenTypes.SPRING,
+                duration: 300,
+                endAnimation:true
+            },
+            ()=>{
+                props.navigation.navigate("FullPageNews");
+            }
+        );
+    }
 
     return (
-        ((props.index == props.currentItem) || (props.index == props.currentItem + 1)) &&
+        ((props.index == currentItem) || (props.index == currentItem + 1)) &&
         <PanGestureHandler
-            enabled={props.index == props.currentItem}
+            enabled={props.index == currentItem}
             maxPointers={1}
             onGestureEvent={
                 Animated.event(
@@ -64,24 +83,24 @@ const Newscard = (props) => {
                     console.log("end")
                     setIsDragging(false);
                     if (e.nativeEvent.translationX < -50) {
-                        props.setActiveIndex(props.currentItem + 1);
+                        props.setActiveIndex(currentItem + 1);
                     }
                     else if (e.nativeEvent.translationX > 50) {
-                        props.setActiveIndex(props.currentItem - 1);
+                        props.setActiveIndex(currentItem - 1);
                     }
                 }
             }}
 
         >
             <Animated.View style={{
-                backgroundColor: props.color,
+                backgroundColor: colors[props.index % 8],
                 paddingHorizontal: 25,
                 paddingBottom: 10,
                 paddingTop: 20,
-                width: Dimensions.get("window").width / 1.15,
+                width: ScreenWidth/1.15,
                 //height:Dimensions.get("window").height/2.1,
                 marginBottom: 20,
-                borderRadius: 15,
+                borderRadius: 25,
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'absolute',
@@ -92,18 +111,32 @@ const Newscard = (props) => {
                     { rotate: props.animationProps[1] },
                     { translateY: props.animationProps[2] },
                 ],
-                opacity: props.animationProps[3]
+                opacity: props.animationProps[3],
             }
             }>
                 <TapGestureHandler
-                    numberOfTaps={2}
+                    enabled={props.index == currentItem}
                     onHandlerStateChange={(e) => {
-                        if (e.nativeEvent.state === State.ACTIVE) {
-                            setLiked(!liked);
+                        if (e.nativeEvent.state === State.END) {
+                            props.navigation.navigate("FullPageNews");
+                            //handleToNewsPage();
                         }
                     }
                     }
+
+                    waitFor={doubleTapRef}
                 >
+                    <TapGestureHandler
+                        enabled={props.index == currentItem}
+                        numberOfTaps={2}
+                        ref={doubleTapRef}
+                        onHandlerStateChange={(e) => {
+                            if (e.nativeEvent.state === State.ACTIVE) {
+                                setLiked(!liked);
+                            }
+                        }
+                    }
+                    >
                     <View>
                         <Text style={{
                             fontFamily: "Manrope-Bold",
@@ -148,6 +181,7 @@ const Newscard = (props) => {
                                 flexDirection: 'row'
                             }}>
                                 <TapGestureHandler
+                                    enabled={props.index == currentItem}
                                     onHandlerStateChange={(e) => {
                                         if (e.nativeEvent.state === State.ACTIVE) {
                                             setLiked(!liked);
@@ -161,6 +195,7 @@ const Newscard = (props) => {
                                 </TapGestureHandler>
 
                                 <TapGestureHandler
+                                    enabled={props.index == currentItem}
                                     onHandlerStateChange={(e) => {
                                         if (e.nativeEvent.state === State.ACTIVE) {
                                             setBookmarked(!bookmarked);
@@ -179,7 +214,7 @@ const Newscard = (props) => {
                             </View>
                         </View>
                     </View>
-
+                    </TapGestureHandler>
                 </TapGestureHandler>
             </Animated.View>
             {/* </FlingGestureHandler> */}

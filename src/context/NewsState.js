@@ -14,14 +14,17 @@ const NewsState = (props) => {
         "technology": "everything?q=technology",
     }
 
+    const colors = ["#FFE8E5", "#FFF2C5", "#E0F1FF","#DAD4E2","#cadae0","#fce6d2","#e2fad9","#f5dce4"]
+    const [currentItem, setCurrentItem] = useState(0)
     const [news,setNews] = useState([]);
     const [dataReady, setDataReady] = useState(false);
     const [dataNeeded, setDataNeeded] = useState(false);
     const [category, setCategory] = useState("trending");
+    const url = `${host}/${categories[category]}${category=="trending"?"?country=in":""}&apiKey=${apiKey}`
 
     const fetchData = async () => {
         console.log("fetching data")
-        const response = await fetch(`${host}/${categories[category]}${category=="trending"?"?country=in":""}&apiKey=${apiKey}`);
+        const response = await fetch(url);
         console.log(response)
         const json = await response.json();
         console.log(json.totalResults + " total results")
@@ -37,6 +40,10 @@ const NewsState = (props) => {
             fetchData:fetchData,
             category:category,
             setCategory:setCategory,
+            colors:colors,
+            currentItem:currentItem,
+            setCurrentItem:setCurrentItem,
+            url:url
         }}>
             {props.children}
         </newsContext.Provider>
