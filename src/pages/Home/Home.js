@@ -122,7 +122,6 @@ const Home = ({navigation}) => {
             }}>
                 <NewscardHolder navigation={navigation} />
             </View>
-            <BottomNavBar />
         </View>
     )
 }

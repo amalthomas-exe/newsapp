@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import newsContext from '../context/newsContext'
 import Newscard from './Newscard'
 import { Alert, Animated, Dimensions, View } from 'react-native'
+import { Image,Text } from 'react-native'
 
 
 
@@ -10,7 +11,7 @@ const height = Dimensions.get("window").height
 
 const NewscardHolder = (props) => {
   const context = useContext(newsContext)
-  const { fetchData,news,dataReady,category,colors,currentItem,setCurrentItem } = context;
+  const { fetchData, news, dataReady, category,currentItem,setCurrentItem } = context;
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
   const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
   // const [activeData, setActiveData] = useState([]);
@@ -41,13 +42,10 @@ const NewscardHolder = (props) => {
     scrollXIndex.setValue(activeIndex);
   })
   return (
-    <View style={
+    <View style={{
+    }}>
       {
-        height: height/1.50
-      }
-    }>
-      {
-        dataReady && news.map((item, index) => {
+        dataReady ? news.map((item, index) => {
           const inputRange = [index - 1, index, index + 1];
           const translateX = scrollXAnimated.interpolate({
             inputRange,
@@ -81,12 +79,30 @@ const NewscardHolder = (props) => {
               animationProps={[translateX, rotate, translateY, opacity]}
               zIndex={zIndex}
               setActiveIndex={setActiveIndex}
-              navigation = {props.navigation}
+              navigation={props.navigation}
+              currentItem={currentItem}
             />
 
           )
         }
-        )
+        ) : <View style={{
+           display: 'flex',
+           justifyContent: 'center',
+           alignItems: 'center',
+           flexDirection: 'column',
+         }}>
+           <Image style={{
+             width: width / 1.25,
+             height: width / 1.25,
+             objectFit: "contain",
+           }} source={require('../../assets/images/loading.png')} />
+           <Text style={{
+             color: "#ffffff8e",
+             fontFamily: "Manrope-Regular",
+             fontSize: 20,
+             marginTop: 0
+           }}>Getting the latest happenings</Text>
+         </View>
       }
     </View>
   )

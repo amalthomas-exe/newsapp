@@ -34,7 +34,7 @@ const Newscard = (props) => {
     const [bookmarked, setBookmarked] = useState(false);
     const doubleTapRef = React.useRef(null);
     const context = useContext(newsContext);
-    const {colors,currentItem} = context
+    const {colors,currentItem,setCurrentPage} = context
     const {startTransition} = useBetweenPages(<FullPageNews context={context}/>)
 
     const handleToNewsPage = () => {
@@ -45,7 +45,7 @@ const Newscard = (props) => {
                 endAnimation:true
             },
             ()=>{
-                props.navigation.navigate("FullPageNews");
+                props.navigation.navigate("FullPageNews",);
             }
         );
     }
@@ -118,7 +118,12 @@ const Newscard = (props) => {
                     enabled={props.index == currentItem}
                     onHandlerStateChange={(e) => {
                         if (e.nativeEvent.state === State.END) {
-                            props.navigation.navigate("FullPageNews");
+                            setCurrentPage("fullPageNews")
+                            props.navigation.navigate("FullPageNews",{
+                                news:props.news,
+                                currentItem:currentItem,
+                                colors:colors
+                            });
                             //handleToNewsPage();
                         }
                     }

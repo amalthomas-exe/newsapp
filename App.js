@@ -1,7 +1,9 @@
 import React from 'react'
 import Home from './src/pages/Home/Home'
 import FullPageNews from './src/pages/FullPageNews/FullPageNews'
-import { SafeAreaView, StatusBar, View } from 'react-native'
+import Search from './src/pages/Search'
+import BottomNavBar from './src/components/BottomNavBar'
+import { StatusBar} from 'react-native'
 import NewsState from './src/context/NewsState'
 import { GestureHandlerRootView, TapGestureHandler } from 'react-native-gesture-handler'
 import { BetweenPagesProvider } from 'between-pages'
@@ -29,7 +31,13 @@ const app = () => {
                   headerShown:false,
                   animation:'slide_from_right',
                   }} />
+                  <Stack.Screen name="Search" component={Search} options={{
+                  headerShown:false,
+                  animation:'slide_from_right',
+                  }} />
               </Stack.Navigator>
+              
+            <BottomNavBar />
             </GestureHandlerRootView>
           </NewsState>
         </BetweenPagesProvider>

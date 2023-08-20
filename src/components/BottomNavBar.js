@@ -1,31 +1,50 @@
-import React,{useContext} from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
 import newsContext from '../context/newsContext'
+import { useNavigation } from '@react-navigation/native'
+
 const BottomNavBar = () => {
+    const navigation = useNavigation()
     const context = useContext(newsContext);
-    const {currentPage,setCurrentPage} = context
+    const { currentPage, setCurrentPage } = context
     return (
         <View style={{
-            display: 'flex',
+            display: (currentPage==="fullPageNews")?'none':'flex',
             flexDirection: 'row',
             alignContent: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            position: 'absolute',
+            bottom: 25,
+            width: '100%',
         }}>
             <View style={{
                 display: 'flex',
                 flexDirection: 'row'
             }}>
-                <View style={[style.bottomTabBtn,(currentPage=="home")?style.bottomTabBtnActive:""]}>
-                    <Icon name="home" size={30} color={(currentPage=="home")?"black":"white"}/>
-                </View>
-                <View style={[style.bottomTabBtn, {
-                    marginHorizontal: 20
-                },(currentPage=="search")?style.bottomTabBtnActive:""]}>
-                    <Icon name="search" size={30} color={(currentPage=="search")?"black":"white"}/>
-                </View>
-                <View style={[style.bottomTabBtn,(currentPage=="bookmark")?style.bottomTabBtnActive:""]}>
-                    <Icon name="bookmark" size={30} color={(currentPage=="bookmark")?"black":"white"}/>
+                <TouchableOpacity onPress={()=>{
+                    setCurrentPage("home")
+                    navigation.navigate("Welcome")
+                }}>
+                    <View style={[style.bottomTabBtn, (currentPage == "home") ? style.bottomTabBtnActive : ""]}>
+                        <Icon name="home" size={30} color={(currentPage == "home") ? "black" : "white"} />
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        setCurrentPage("search")
+                        navigation.navigate("Search")
+                    }}
+                >
+                    <View style={[style.bottomTabBtn, {
+                        marginHorizontal: 10
+                    }, (currentPage == "search") ? style.bottomTabBtnActive : ""]}>
+                        <Icon name="search" size={30} color={(currentPage == "search") ? "black" : "white"} />
+                    </View>
+                </TouchableOpacity>
+                <View style={[style.bottomTabBtn, (currentPage == "bookmark") ? style.bottomTabBtnActive : ""]}>
+                    <Icon name="bookmark" size={30} color={(currentPage == "bookmark") ? "black" : "white"} />
                 </View>
             </View>
         </View>
@@ -34,8 +53,8 @@ const BottomNavBar = () => {
 
 const style = StyleSheet.create({
     bottomTabBtn: {
-        width: 60,
-        height: 60,
+        width: 55,
+        height: 55,
         borderRadius: 33,
         backgroundColor: "#2b2b2b",
         display: 'flex',
@@ -44,10 +63,10 @@ const style = StyleSheet.create({
         justifyContent: "center"
     },
 
-    bottomTabBtnActive:{
-        width: 65,
-        height: 65,
-        backgroundColor:'white'
+    bottomTabBtnActive: {
+        width: 60,
+        height: 60,
+        backgroundColor: 'white'
     }
 })
 

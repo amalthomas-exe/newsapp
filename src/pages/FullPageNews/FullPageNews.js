@@ -1,13 +1,17 @@
 import React, { useContext, useState } from 'react'
-import { View, Text, StatusBar, Image, ScrollView } from 'react-native'
+import { View, Text, StatusBar, Image, ScrollView, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import newsContext from '../../context/newsContext'
+//import newsContext from '../../context/newsContext'
 import AuthorInfo from '../../components/AuthorInfo'
 import { State, TapGestureHandler } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
-const FullPageNews = (props) => {
-  const { currentItem, colors, news, url } = useContext(newsContext)
-  console.log(news[currentItem].description)
+const FullPageNews = ({ route }) => {
+  console.log(route.params)
+  const { news, currentItem, colors } = route.params
+  console.log(news)
+  const navigation = useNavigation()
+
   return (
     <>
       <StatusBar backgroundColor={colors[currentItem % 8]} barStyle={'dark-content'} animated={true} />
@@ -27,12 +31,12 @@ const FullPageNews = (props) => {
             onHandlerStateChange={(e) => {
               if (e.nativeEvent.state = State.END) {
                 console.log("going back")
-                props.navigation.goBack()
+                navigation.goBack()
               }
             }}
           ><View style={{
             alignSelf: 'flex-start',
-            marginTop:20,
+            marginTop: 20,
             padding: 8,
             borderRadius: 50,
             backgroundColor: "#0000002c"
@@ -49,7 +53,7 @@ const FullPageNews = (props) => {
               fontSize: 25,
               lineHeight: 40
             }}>
-              {news[currentItem].title}
+              {news.title}
             </Text>
           </View>
           <View>
@@ -59,10 +63,10 @@ const FullPageNews = (props) => {
               color: "#0000008e",
               fontSize: 15,
             }}>
-              {news[currentItem].publishedAt.split("T")[0]}
+              {news.publishedAt.split("T")[0]}
             </Text>
           </View>
-          <AuthorInfo author={news[currentItem].source.name} />
+          <AuthorInfo author={news.source.name} />
           <Text style={{
             color: 'black',
             fontSize: 15,
@@ -70,31 +74,46 @@ const FullPageNews = (props) => {
             lineHeight: 25,
             marginTop: 20
           }}>
-            {news[currentItem].description}
+            {news.description}
           </Text>
           <Image
-            source={{ uri: news[currentItem].urlToImage }}
+            source={{ uri: news.urlToImage }}
 
             style={{
               width: '100%',
-              height: 300,
+              height: 250,
               marginTop: 20,
-              borderRadius: 10
+              borderRadius: 10,
+              objectFit: 'cover'
             }}
 
           >
-
           </Image>
-          <Text style={{
-            color: 'black',
-            fontSize: 15,
-            fontFamily: "Manrope-Medium",
-            lineHeight: 25,
-            marginTop: 20
-          }}>
-            {news[currentItem].content}
-          </Text>
         </ScrollView>
+        <TouchableOpacity style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          marginBottom: 20,
+          left: 20,
+          elevation: 10,
+              backgroundColor: '#ffb08f',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'centers',
+              alignItems: 'center',
+              borderRadius: 15
+        }}>
+            <Text style={{
+              color: colors[currentItem % 8],
+              fontSize: 18,
+              fontFamily: "Manrope-Bold",
+              lineHeight: 25,
+              paddingVertical: 8
+            }}>
+              View full story
+            </Text>
+        </TouchableOpacity>
       </View>
     </>
   )
