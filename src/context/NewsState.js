@@ -50,7 +50,7 @@ const NewsState = (props) => {
             setCurrentItem:setCurrentItem,
             url:url,
             currentPage:currentPage,
-            setCurrentPage,setCurrentPage,
+            setCurrentPage:setCurrentPage,
         }}>
             {props.children}
         </newsContext.Provider>

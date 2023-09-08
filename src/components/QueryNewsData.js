@@ -7,13 +7,14 @@ import { TapGestureHandler,State } from 'react-native-gesture-handler'
 const QueryNewsData = (props) => {
     const navigation = useNavigation()
     const context = useContext(newsContext)
-    const {currentItem,colors} = context
+    const {currentItem,colors,setCurrentPage} = context
 
   return (
     <TapGestureHandler
         numberOfTaps={1}
         onHandlerStateChange={(e) => {
             if (e.nativeEvent.state == State.END) {
+                setCurrentPage("fullPageNews")
                 navigation.navigate('FullPageNews',{
                     news:props.news,
                     currentItem:props.index,
