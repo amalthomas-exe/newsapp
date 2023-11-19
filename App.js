@@ -24,7 +24,7 @@ const app = () => {
                 barStyle="light-content"
               />
               <Stack.Navigator>
-                <Stack.Screen name="Welcome" component={Home} options={{
+                <Stack.Screen name="Home" component={Home} options={{
                   headerShown: false,
                 }}/>
                 <Stack.Screen name="FullPageNews" component={FullPageNews} options={{

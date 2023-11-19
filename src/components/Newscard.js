@@ -118,7 +118,6 @@ const Newscard = (props) => {
                     enabled={props.index == currentItem}
                     onHandlerStateChange={(e) => {
                         if (e.nativeEvent.state === State.END) {
-                            setCurrentPage("fullPageNews")
                             props.navigation.navigate("FullPageNews",{
                                 news:props.news,
                                 currentItem:currentItem,

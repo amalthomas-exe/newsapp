@@ -1,16 +1,32 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { View, Text, StatusBar, Image, ScrollView, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-//import newsContext from '../../context/newsContext'
+import newsContext from '../../context/newsContext'
 import AuthorInfo from '../../components/AuthorInfo'
 import { State, TapGestureHandler } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
 const FullPageNews = ({ route }) => {
   console.log(route.params)
-  const { news, currentItem, colors } = route.params
+  const context = useContext(newsContext);
+  const {setCurrentPage}= context;
+  const { news, currentItem, currentPage,colors } = route.params
   console.log(news)
   const navigation = useNavigation()
+
+  useEffect(()=>{
+    setCurrentPage("FullPageNews")
+  },[currentPage])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
+      e.preventDefault(); // Prevent default action
+      unsubscribe() // Unsubscribe the event on first call to prevent infinite loop
+      console.log("Pressed back")
+      setCurrentPage("Home")
+      navigation.navigate('Home') // Navigate to your desired screen
+    });
+ }, [])
 
   return (
     <>
@@ -32,6 +48,7 @@ const FullPageNews = ({ route }) => {
               if (e.nativeEvent.state = State.END) {
                 console.log("going back")
                 navigation.goBack()
+                setCurrentPage("Home")
               }
             }}
           ><View style={{

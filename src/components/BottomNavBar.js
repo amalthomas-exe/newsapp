@@ -10,7 +10,7 @@ const BottomNavBar = () => {
     const { currentPage, setCurrentPage } = context
     return (
         <View style={{
-            display: (currentPage==="fullPageNews")?'none':'flex',
+            display: (currentPage==="FullPageNews")?'none':'flex',
             flexDirection: 'row',
             alignContent: 'center',
             justifyContent: 'center',

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import newsContext from '../../context/newsContext'
 import { TapGestureHandler, State } from 'react-native-gesture-handler'
 import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native'
@@ -8,9 +8,10 @@ import BottomNavBar from '../../components/BottomNavBar'
 
 const Home = ({navigation}) => {
     const context = useContext(newsContext)
-    const { category, setCategory } = context;
+    const { category, setCategory,currentPage,setCurrentPage } = context;
     console.log("Welcome")
     console.log(category)
+
     return (
         <View style={styles.container}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
